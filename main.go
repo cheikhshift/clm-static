@@ -102,7 +102,11 @@ func handleRequest(conn net.Conn) {
 	ipaddr := GetServerAvailable()
 	proxy, err := net.Dial("tcp",  ipaddr )
 	if err != nil {
-		log.Println(err)	
+		
+		Host.Lock.Lock()
+		defer Host.Lock.Unlock()
+		defer handleRequest(conn)
+		delete(Host.Cache, ipaddr)
 		return
 	}
 	
@@ -123,6 +127,3 @@ func copyIO(src, dest net.Conn, index string) {
 
 
 }
-
-
-
