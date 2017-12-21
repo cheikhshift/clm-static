@@ -66,7 +66,8 @@ func main() {
 	maxcon := flag.Int("max", 100, "Maximum number of connections per instance. clm-static will divide tasks.")
 	addby := flag.Int("incby", 1, "Increase last octet of IP when picking the next server.")
 	dhcpstart := flag.Int("start", 1, "First DHCP assigned IP of your instances (Initial value of last octet of IPv4 address). Example : with value 21, this tool will assume your first instance's ip will be 192.168.0.21")
-	port := flag.String("port", "8080", "Port your instances will listen on.")
+	apport := flag.String("port", "8080", "Port clm-static should listen.")
+	port := flag.String("appPort", "8080", "Port your instances will listen on.")
 
 	flag.Parse()
 
@@ -77,7 +78,7 @@ func main() {
 	LANnet = strings.Split(*dhcpstr, ".")
 	Count = *dhcpstart
 	Host = NewCache()
-	PortApp = *port
+	PortApp = *	apport
 
 	ln, err := net.Listen("tcp", fmt.Sprintf(":%s", *port) )
 	if err != nil {
@@ -122,3 +123,6 @@ func copyIO(src, dest net.Conn, index string) {
 
 
 }
+
+
+
