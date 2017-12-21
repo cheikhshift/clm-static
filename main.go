@@ -51,8 +51,9 @@ func GetServerAvailable() string {
 	}
 
 	lsize := len(LANnet) - IpInc
-	Count++
+	
 	LANnet[lsize] = fmt.Sprintf("%v:%s",Count, PortApp )
+	Count++
 	index = strings.Join(LANnet,".")
 	//run bash
 	Host.Cache[index] = IpInc
@@ -121,6 +122,3 @@ func copyIO(src, dest net.Conn, index string) {
 
 
 }
-
-
-
