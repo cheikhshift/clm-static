@@ -65,7 +65,7 @@ func main() {
 	dhcpstr := flag.String("net", "192.168.0.1", "Router LAN IP address (DHCP subnet).")
 	maxcon := flag.Int("max", 100, "Maximum number of connections per instance. clm-static will divide tasks.")
 	addby := flag.Int("incby", 1, "Increase last octet of IP when picking the next server.")
-	dhcpstart := flag.Int("start", 1, "First DHCP assigned IP of your instances (Initial value of last octet of IPv4 address). Example : with value 21, this tool will assume your first instance's ip will be 192.168.0.21")
+	dhcpstart := flag.Int("start", 1, "First DHCP assigned IP of your instances (Initial value of last octet in IPv4 address). Example : with value 21, this tool will assume your first instance's ip will be 192.168.0.21")
 	apport := flag.String("appPort", "8080", "Port your instances will listen on.")
 	port := flag.String("port", "9000",  "Port clm-static should listen on.")
 
@@ -102,10 +102,9 @@ func handleRequest(conn net.Conn) {
 	ipaddr := GetServerAvailable()
 	proxy, err := net.Dial("tcp",  ipaddr )
 	if err != nil {
-		
+		defer handleRequest(conn)
 		Host.Lock.Lock()
 		defer Host.Lock.Unlock()
-		defer handleRequest(conn)
 		delete(Host.Cache, ipaddr)
 		return
 	}
@@ -127,3 +126,6 @@ func copyIO(src, dest net.Conn, index string) {
 
 
 }
+
+
+
