@@ -1,5 +1,5 @@
 # clm-static
-A simple load manager written in Go. CLM auto scales your application based on the flags supplied. It uses the norms of DHCP to predict the addresses of your replicated servers.
+A simple load manager written in Go. CLM auto scales your distributes loads based on the flags supplied. It uses the norms of DHCP to predict the addresses of your replicated servers.
 
 ## Installing
 Downloading and installing this package requires Go.
